@@ -1,0 +1,11 @@
+
+# Build files
+.DS_Store
+.build
+.project
+.rds_delta
+.sdk_delta.info
+.settings/
+.sign/
+.tproject
+*.wgt

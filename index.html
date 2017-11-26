@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width,user-scalable=no">
+	<title>Circular UI</title>
+	<link rel="stylesheet" href="lib/tau/wearable/theme/default/tau.min.css">
+	<link rel="stylesheet" media="all and (-tizen-geometric-shape: circle)" href="lib/tau/wearable/theme/default/tau.circle.min.css">
+	<link rel="stylesheet" href="lib/font-awesome-4.7.0/css/font-awesome.min.css" /> 
+	<!-- load theme file for your application -->
+	<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+	<div class="ui-page ui-page-active" id="mainPage" data-enable-page-scroll="false">
+	
+	   <header class="ui-header">
+	      <h2 class="ui-title text-red padding-30" id="mainPageTitle">Today</h2>
+		</header>
+		<div class="ui-content" id="sectionchanger">
+		   <div id="sections">
+		      <section>
+		      	
+		         <div class="empty-log">Log Empty</div>
+		         <div class="new-instructions">Add new workout (<i class="fa fa-plus"></i>) or copy previous (<i class="fa fa-calendar"></i>)</div>
+		         <div class="circle-btn bottom-left"><i class="fa fa-plus text-yellow circle-btn-icon"></i></div>
+		         <div class="circle-btn bottom-right"><i class="fa fa-calendar text-yellow circle-btn-icon"></i></div>
+		         
+		      </section>
+		   </div>
+		</div>
+		
+		<div id="pagination"></div>
+
+	</div>
+
+	<script type="text/javascript" src="lib/jquery-ui-1.12.1/external/jquery/jquery.js"></script>
+	<script type="text/javascript" src="lib/jquery-ui-1.12.1/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="lib/tau/wearable/js/tau.min.js"></script>
+	<script src="js/db_manager.js"></script>
+	<script src="js/app.js"></script>
+	<script src="js/main_page.js"></script>
+	<script src="js/exercise_categories.js"></script>
+	<script src="lowBatteryCheck.js"></script>
+</body>
+</html>
