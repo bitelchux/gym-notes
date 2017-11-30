@@ -317,7 +317,7 @@ function generateFullSection(section) {
 			setTimeout(function () {
 				card.style.transform = "scale(1)";
 				card.style.opacity = "";
-				console.log("card clicked");
+				tau.changePage("sessionPage");
 			}, 120);
 		})
 		

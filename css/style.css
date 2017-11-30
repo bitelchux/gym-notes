@@ -196,7 +196,7 @@ hr.styled {
 
 .floating-side-button {
 	border: 2px solid;
-	border-color: #FFD05B;
+	border-color: #ff7f4f;
     border-radius: 25px;
     text-align: center;
     display: inline-block;
@@ -204,7 +204,7 @@ hr.styled {
     width: 50px;
     height: 50px;
     background-color: #1A1A1A;
-    box-shadow: 0px 0px 15px #FFD05B;
+    box-shadow: 0px 0px 15px #ff7f4f;
 	-webkit-touch-callout: none;
  	-webkit-user-select: none;
  	user-select: none;		
