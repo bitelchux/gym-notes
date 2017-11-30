@@ -9,6 +9,7 @@ var workouts;
 var loadedSections;
 var lastSectionIndex;
 var paginationEl = document.getElementById("pagination");
+var sideBtnEl = document.getElementById("sideBtn");
 var newCategorySearch = true;
 
 /**
@@ -41,6 +42,18 @@ mainPage.addEventListener("pagecreate", function() {
 	sectionChangerWidget.setActiveSection(1);
 	// Initialize pagination
 	initPagination();
+	
+	// Add event listener for side button
+	sideBtnEl.addEventListener("click", function() {
+		sideBtnEl.style.transform = "scale(0.8)";
+		sideBtnEl.style.opacity = "0.8";
+		setTimeout(function () {
+			sideBtnEl.style.transform = "scale(1)";
+			sideBtnEl.style.opacity = "";
+			newCategorySearch = true;
+			tau.changePage("exerciseCategoriesPage");
+		}, 120);
+	});
 })
 
 /**
@@ -66,6 +79,13 @@ mainPage.addEventListener("pagebeforeshow", function() {
     // Register rotary event in order to scroll with rotating bezel
 	sectionScroller = loadedSections[currentSectionIdx].dom;
     document.addEventListener("rotarydetent", rotaryEventHandler);
+    
+    // Showing/hiding side button
+    if (loadedSections[currentSectionIdx].workout == null) {
+    	sideBtnEl.style.display = "none";
+    } else {
+    	sideBtnEl.style.display = "inline-block";
+    }
 	
 });
 
@@ -91,6 +111,13 @@ function sectionChangeHandler(e) {
 	
 	// Update section scroller in on order to rotate new section with the bezel
 	sectionScroller = loadedSections[e.detail.active].dom;
+	
+    // Showing/hiding side button
+    if (loadedSections[e.detail.active].workout == null) {
+    	sideBtnEl.style.display = "none";
+    } else {
+    	sideBtnEl.style.display = "inline-block";
+    }
 	
 	// If section changed, animate pagination
 	if (lastSectionIndex != null) {

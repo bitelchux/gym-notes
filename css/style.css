@@ -90,10 +90,9 @@ section {
     text-align: center;
     display: inline-block !important;
     position: absolute;
-    padding-top: 10px;
+    padding-top: 12px;
     padding-left: 15px;
     padding-right: 15px;
-    padding-bottom: 10px;
     width: 70px;
     height: 70px;
     background-color: #1A1A1A;
@@ -154,6 +153,10 @@ section {
 	box-shadow: 0 0 15px black;
 	margin-bottom: 20px;
 	position: relative;
+	-webkit-touch-callout: none;
+ 	-webkit-user-select: none;
+ 	user-select: none;		
+  	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
 }
 
 hr.styled { 
@@ -189,6 +192,35 @@ hr.styled {
 	text-align: center;
 	margin: 0 auto; 
     width: 100%;
+}
+
+.floating-side-button {
+	border: 2px solid;
+	border-color: #FFD05B;
+    border-radius: 25px;
+    text-align: center;
+    display: inline-block;
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    background-color: #1A1A1A;
+    box-shadow: 0px 0px 15px #FFD05B;
+	-webkit-touch-callout: none;
+ 	-webkit-user-select: none;
+ 	user-select: none;		
+  	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+}
+
+.floating-side-button-icon {
+	font-size: 60% !important;
+	display: inline-block;
+  	vertical-align: middle;
+  	line-height: normal;
+}
+
+.middle-left {
+	top: 155px;
+	left: 12px;
 }
 
 .padding-30 {
