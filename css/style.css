@@ -16,7 +16,6 @@ src: url('../fonts/Handlee-Regular.ttf');
 
 .empty-log {
 	color:#FFD05B !important; 
-	margin-top: 20px;
 }
 
 .new-instructions {
@@ -35,7 +34,7 @@ src: url('../fonts/Handlee-Regular.ttf');
 }
 
 .ui-page {
-	background-image: url(../images/diagmonds.png) !important;
+	background-image: url(../images/diagmonds_1.png) !important;
 }
 
 .text-yellow {
@@ -56,6 +55,7 @@ body {
 }
 
 section {
+	padding-top: 20px;
 	padding-bottom: 100px;
 	overflow: hidden;
 	overflow-y: auto;
@@ -96,7 +96,7 @@ section {
     padding-bottom: 10px;
     width: 70px;
     height: 70px;
-    background-color: #121212;
+    background-color: #1A1A1A;
     box-shadow: 0px 0px 15px #FFD05B;
 	-webkit-touch-callout: none;
  	-webkit-user-select: none;
@@ -142,9 +142,54 @@ section {
 .header-low {
 	height: 70px;
 	background-color: #1A1A1A;
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	box-shadow: 0 0 15px black;
 }
 
+.exercise-card {
+    border-radius: 10px;
+    text-align: center;
+	width: 290px;
+	display:inline-block;
+	background-color: #1A1A1A;
+	box-shadow: 0 0 15px black;
+	margin-bottom: 20px;
+	position: relative;
+}
+
+hr.styled { 
+	border: 0; 
+	height: 1px;
+	margin-top: 0;
+	margin-bottom: 0; 
+	background-image: linear-gradient(to right, rgba(255, 209, 91, 0), rgba(255, 209, 91, 0.75), rgba(255, 209, 91, 0)); 
+}
+
+.exercise-card-title {
+	font-size: 80% !important;
+	padding: 5px 5px 5px 5px;
+}
+
+.exercise-card-reps {
+	font-size: 75% !important;
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+
+.exercise-card-remove {
+	position: absolute;
+	right: 5px;
+	bottom: 5px;
+	height: 25px;
+	width: 25px;
+	color: #ff7f4f;
+	font-size: 70% !important;
+}
+
+.set-table {
+	text-align: center;
+	margin: 0 auto; 
+    width: 100%;
+}
 
 .padding-30 {
 	padding-top: 25px !important;

@@ -47,6 +47,8 @@ mainPage.addEventListener("pagecreate", function() {
  * pagebeforeshow event handler
  * Adds sectionchange event listener
  */
+var SCROLL_STEP = 50;// distance of moving scroll for each rotary event
+var sectionScroller;
 mainPage.addEventListener("pagebeforeshow", function() {
 	sectionChangerEl.addEventListener("sectionchange", sectionChangeHandler, {
 		circular: false,
@@ -60,6 +62,11 @@ mainPage.addEventListener("pagebeforeshow", function() {
 		fillSectionDOM(loadedSections[currentSectionIdx]);
 		loadedSections[currentSectionIdx].updated = true;
 	}
+	
+    // Register rotary event in order to scroll with rotating bezel
+	sectionScroller = loadedSections[currentSectionIdx].dom;
+    document.addEventListener("rotarydetent", rotaryEventHandler);
+	
 });
 
 /**
@@ -68,6 +75,7 @@ mainPage.addEventListener("pagebeforeshow", function() {
  */
 mainPage.addEventListener( "pagehide", function() {
 	sectionChangerEl.removeEventListener("sectionchange", sectionChangeHandler);
+    document.removeEventListener("rotarydetent", rotaryEventHandler);
 });
 
 /**
@@ -75,11 +83,16 @@ mainPage.addEventListener( "pagehide", function() {
  * Updates section view
  */	
 function sectionChangeHandler(e) {
+	// Animate title change
 	$(title).hide("drop", {direction: "up", duration: 200}, function () {
 		title.innerHTML = generateSectionTitle(loadedSections[e.detail.active]);
 		$(title).show("drop", {direction: "up", duration: 200});
 	}); 
 	
+	// Update section scroller in on order to rotate new section with the bezel
+	sectionScroller = loadedSections[e.detail.active].dom;
+	
+	// If section changed, animate pagination
 	if (lastSectionIndex != null) {
 		updatePagination();
 	}
@@ -107,8 +120,11 @@ function sectionChangeHandler(e) {
  * Adds new section
  */	
 function addNewSection(section, side) {
+	// Create section dom, <section></section>
 	section.dom = document.createElement("section");
+	// Fill <section> element
 	fillSectionDOM(section);
+	// Add section to section list
 	if (side === "left") {
 		loadedSections.unshift(section);
 		sectionsEl.insertBefore(section.dom, sectionsEl.childNodes[0]);
@@ -123,17 +139,13 @@ function addNewSection(section, side) {
  * Creates DOM for new section
  */	
 function fillSectionDOM(section) {
+	section.dom.innerHTML = "";
 	if (section.workout == null) {
-		sectionEl = generateEmptySection(section);
+		// Workout is empty
+		generateEmptySection(section);
 	} else {
-		section.dom.innerHTML = "";
-		if (section.workout != null) {
-			for (var i = 0; i < section.workout.exercises.length; i++) {
-				var div = document.createElement("div");
-				div.innerHTML = section.workout.exercises[i].name;
-				section.dom.appendChild(div);
-			}
-		}
+		// Workout is not empty
+		generateFullSection(section);
 	}
 }
 
@@ -141,8 +153,10 @@ function fillSectionDOM(section) {
  * Generates section title based on date
  */	
 function generateSectionTitle(section) {
+	// Date in form "DoW dd/mm"
 	var titleStr = DAY_NAMES[section.date.getDay()] + " " + section.date.getDate() + "/" + (section.date.getMonth()+1);
 	
+	// If section is for yesterday, today, or tomorrow, change the title correspondiglly
 	var today = new Date();
 	var yesterday = new Date();
 	yesterday.setDate(today.getDate() - 1);		
@@ -213,13 +227,87 @@ function generateEmptySection(section) {
 }	
 
 /**
+ * Generates full section
+ */	
+function generateFullSection(section) {
+	for (var i = 0; i < section.workout.sessions.length; i++) {
+		
+		// Create exercise card element
+		var divExerciseCard = document.createElement("div");
+		divExerciseCard.setAttribute("class", "exercise-card");
+		
+		// Create title div
+		var divCardTitle = document.createElement("div");
+		divCardTitle.setAttribute("class", "type-font exercise-card-title text-yellow");
+		divCardTitle.innerHTML = section.workout.sessions[i].exercise.name;
+		
+		// Create horizontal line separating title and logged sets
+		var hr = document.createElement("hr");
+		hr.setAttribute("class", "styled");
+		
+		// Create div containing trainings sets
+		var divCardSets = document.createElement("div");
+		divCardSets.setAttribute("class", "type-font exercise-card-reps hand-font");
+		
+		if (section.workout.sessions[i].sets.length === 0) {
+			divCardSets.innerHTML = "No logged sets.<br/>Tap to edit...";
+		} else {
+			var tableSets = document.createElement("table")
+			tableSets.setAttribute("class","set-table");
+			for (var j = 0; j < section.workout.sessions[i].sets.length; j++) {
+				var trSet = document.createElement("tr");
+				var tdSet = document.createElement("td");
+				tdSet.setAttribute("class", "text-yellow");
+				tdSet.innerHTML = 'Set ' + (j+1) + '.';
+				var tdKg = document.createElement("td");
+				tdKg.innerHTML = section.workout.sessions[i].sets[j].weight + ' kg';
+				var tdRep = document.createElement("td");
+				tdRep.innerHTML = section.workout.sessions[i].sets[j].rep + ' rep';
+				trSet.appendChild(tdSet);
+				trSet.appendChild(tdKg);
+				trSet.appendChild(tdRep);
+				tableSets.appendChild(trSet);
+			}
+			divCardSets.appendChild(tableSets);
+		}
+		
+//		// X icon in lower right cornet
+//		var divDeleteCard = document.createElement("div");
+//		divDeleteCard.setAttribute("class", "exercise-card-remove");
+//		divDeleteCard.innerHTML = '<i class="fa fa-times"></i>';
+		
+		// Append elements to card
+		divExerciseCard.appendChild(divCardTitle);
+		divExerciseCard.appendChild(hr);
+		divExerciseCard.appendChild(divCardSets);
+//		divExerciseCard.appendChild(divDeleteCard);
+		
+		// Add event listener
+		divExerciseCard.addEventListener("click", function() {
+			var card = this;
+			card.style.transform = "scale(0.8)";
+			card.style.opacity = "0.8";
+			setTimeout(function () {
+				card.style.transform = "scale(1)";
+				card.style.opacity = "";
+				console.log("card clicked");
+			}, 120);
+		})
+		
+		// Append to section DOM
+		section.dom.appendChild(divExerciseCard);
+	}
+}
+
+/**
  * Initializes pagination bullets at the bottom of the screen
  */
 function initPagination() {
 	lastSectionIndex = sectionChangerWidget.getActiveSectionIndex();
 
 	paginationEl.innerHTML = "";
-
+	
+	// Pagination element consists of a list of bullets
 	var newBullet = document.createElement("span");
 	newBullet.setAttribute("class","swiper-pagination-bullet swiper-pagination-bullet-active-prev-prev");
 	paginationEl.appendChild(newBullet);
@@ -280,3 +368,17 @@ function updatePagination() {
 
 	lastSectionIndex = newActiveSectionIndex;
 }
+
+/**
+ * Rotary event handler
+ * Scrolls current section DOM
+ */
+var rotaryEventHandler = function(e) {
+    if (sectionScroller) {
+        if (e.detail.direction === "CW") { // Right direction
+        	sectionScroller.scrollTop += SCROLL_STEP;
+        } else if (e.detail.direction === "CCW") { // Left direction
+        	sectionScroller.scrollTop -= SCROLL_STEP;
+        }
+    }
+};

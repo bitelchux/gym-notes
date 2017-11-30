@@ -73,17 +73,17 @@ function createExerciseLiElement(exercise) {
 		var addRemoveDiv = this.querySelector(".li-text-sub"); 
 		var exerciseInCurrentWorkoutIdx = exerciseInCurrentWorkout(exercise);
 		if (exerciseInCurrentWorkoutIdx >= 0) {
-			currentSection.workout.exercises.splice(exerciseInCurrentWorkoutIdx,1);
-			if (currentSection.workout.exercises.length === 0) {
+			currentSection.workout.sessions.splice(exerciseInCurrentWorkoutIdx,1);
+			if (currentSection.workout.sessions.length === 0) {
 				currentSection.workout = null;
 			}
 			addRemoveDiv.setAttribute("class", "li-text-sub ui-li-sub-text text-yellow hand-font");
 			addRemoveDiv.innerHTML = '<i class="fa fa-plus"></i> Add';
 		} else {
 			if (currentSection.workout == null) {
-				currentSection.workout = { exercises: [exercise] };
+				currentSection.workout = { sessions: [ { "exercise": exercise, sets: [] } ] };
 			} else {
-				currentSection.workout.exercises.push(exercise);
+				currentSection.workout.sessions.push( {"exercise": exercise, sets: [] } );
 			}
 			addRemoveDiv.setAttribute("class", "li-text-sub ui-li-sub-text text-red hand-font");
 			addRemoveDiv.innerHTML = '<i class="fa fa-trash"></i> Remove'; 
@@ -100,8 +100,8 @@ function exerciseInCurrentWorkout(exercise) {
 		return -1;
 	}
 	var found = -1;
-	for(var i = 0; i < currentSection.workout.exercises.length; i++) {
-	    if (currentSection.workout.exercises[i].id === exercise.id) {
+	for(var i = 0; i < currentSection.workout.sessions.length; i++) {
+	    if (currentSection.workout.sessions[i].exercise.id === exercise.id) {
 	        found = i;
 	        break;
 	    }
