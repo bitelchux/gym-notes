@@ -8,7 +8,13 @@ var btnAddRep = document.getElementById("btnAddRep");
 var btnSave = document.getElementById("btnSave");
 var btnClear = document.getElementById("btnClear");
 
+var sessionPageScroller;
 sessionPage.addEventListener("pagebeforeshow", function() {
+	sessionPageScroller = sessionPage.querySelector(".ui-scroller");
+	sessionPageScroller.scrollTop = 0;
+    document.addEventListener("rotarydetent", rotarySessionEventHandler);
+	
+	
 	btnSubKg.addEventListener("click", substractWeight);
 	btnAddKg.addEventListener("click", addWeight);
 	btnSubRep.addEventListener("click", substractRep);
@@ -18,6 +24,8 @@ sessionPage.addEventListener("pagebeforeshow", function() {
 }) 
 
 sessionPage.addEventListener("pagehide", function() {
+	document.removeEventListener("rotarydetent", rotarySessionEventHandler);
+	
 	btnSubKg.removeEventListener("click", substractWeight);
 	btnAddKg.removeEventListener("click", addWeight);
 	btnSubRep.removeEventListener("click", substractRep);
@@ -88,7 +96,7 @@ function addRep() {
 function saveSet() {
 	var kg = parseFloat(kgBox.value);
 	var reps = parseFloat(repBox.value);
-	if (isNaN(kg) || isNaN(reps) || kg === 0 || reps === 0) {
+	if (isNaN(kg) || isNaN(reps) || reps === 0) {
 		return;
 	}
 	animateButton(btnSave);
@@ -102,3 +110,14 @@ function clearSet() {
 	kgBox.value = "0";
 	repBox.value = "0";
 }
+
+// rotary event handler
+function rotarySessionEventHandler(e) {
+    if (sessionPageScroller) {
+        if (e.detail.direction === "CW") { // Right direction
+        	sessionPageScroller.scrollTop += SCROLL_STEP;
+        } else if (e.detail.direction === "CCW") { // Left direction
+        	sessionPageScroller.scrollTop -= SCROLL_STEP;
+        }
+    }
+};
