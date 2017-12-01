@@ -11,6 +11,7 @@ var lastSectionIndex;
 var paginationEl = document.getElementById("pagination");
 var sideBtnEl = document.getElementById("sideBtn");
 var newCategorySearch = true;
+var selectedSession = null;
 
 /**
  * pagecreate event handler
@@ -73,7 +74,7 @@ mainPage.addEventListener("pagebeforeshow", function() {
 	var currentSectionIdx = sectionChangerWidget.getActiveSectionIndex();
 	if (loadedSections[currentSectionIdx].updated) {
 		fillSectionDOM(loadedSections[currentSectionIdx]);
-		loadedSections[currentSectionIdx].updated = true;
+		loadedSections[currentSectionIdx].updated = false;
 	}
 	
     // Register rotary event in order to scroll with rotating bezel
@@ -258,71 +259,74 @@ function generateEmptySection(section) {
  */	
 function generateFullSection(section) {
 	for (var i = 0; i < section.workout.sessions.length; i++) {
-		
-		// Create exercise card element
-		var divExerciseCard = document.createElement("div");
-		divExerciseCard.setAttribute("class", "exercise-card");
-		
-		// Create title div
-		var divCardTitle = document.createElement("div");
-		divCardTitle.setAttribute("class", "type-font exercise-card-title text-yellow");
-		divCardTitle.innerHTML = section.workout.sessions[i].exercise.name;
-		
-		// Create horizontal line separating title and logged sets
-		var hr = document.createElement("hr");
-		hr.setAttribute("class", "styled");
-		
-		// Create div containing trainings sets
-		var divCardSets = document.createElement("div");
-		divCardSets.setAttribute("class", "type-font exercise-card-reps hand-font");
-		
-		if (section.workout.sessions[i].sets.length === 0) {
-			divCardSets.innerHTML = "No logged sets.<br/>Tap to edit...";
-		} else {
-			var tableSets = document.createElement("table")
-			tableSets.setAttribute("class","set-table");
-			for (var j = 0; j < section.workout.sessions[i].sets.length; j++) {
-				var trSet = document.createElement("tr");
-				var tdSet = document.createElement("td");
-				tdSet.setAttribute("class", "text-yellow");
-				tdSet.innerHTML = 'Set ' + (j+1) + '.';
-				var tdKg = document.createElement("td");
-				tdKg.innerHTML = section.workout.sessions[i].sets[j].weight + ' kg';
-				var tdRep = document.createElement("td");
-				tdRep.innerHTML = section.workout.sessions[i].sets[j].rep + ' rep';
-				trSet.appendChild(tdSet);
-				trSet.appendChild(tdKg);
-				trSet.appendChild(tdRep);
-				tableSets.appendChild(trSet);
+		(function(i) {		
+			// Create exercise card element
+			var divExerciseCard = document.createElement("div");
+			divExerciseCard.setAttribute("class", "exercise-card");
+			
+			// Create title div
+			var divCardTitle = document.createElement("div");
+			divCardTitle.setAttribute("class", "type-font exercise-card-title text-yellow");
+			divCardTitle.innerHTML = section.workout.sessions[i].exercise.name;
+			
+			// Create horizontal line separating title and logged sets
+			var hr = document.createElement("hr");
+			hr.setAttribute("class", "styled");
+			
+			// Create div containing trainings sets
+			var divCardSets = document.createElement("div");
+			divCardSets.setAttribute("class", "type-font exercise-card-reps hand-font");
+			
+			if (section.workout.sessions[i].sets.length === 0) {
+				divCardSets.innerHTML = "No logged sets.<br/>Tap to edit...";
+			} else {
+				var tableSets = document.createElement("table")
+				tableSets.setAttribute("class","set-table");
+				for (var j = 0; j < section.workout.sessions[i].sets.length; j++) {
+					var trSet = document.createElement("tr");
+					var tdSet = document.createElement("td");
+					tdSet.setAttribute("class", "text-yellow");
+					tdSet.innerHTML = 'Set ' + (j+1) + '.';
+					var tdKg = document.createElement("td");
+					tdKg.innerHTML = section.workout.sessions[i].sets[j].weight + ' kg';
+					var tdRep = document.createElement("td");
+					tdRep.innerHTML = section.workout.sessions[i].sets[j].rep + ' rep';
+					trSet.appendChild(tdSet);
+					trSet.appendChild(tdKg);
+					trSet.appendChild(tdRep);
+					tableSets.appendChild(trSet);
+				}
+				divCardSets.appendChild(tableSets);
 			}
-			divCardSets.appendChild(tableSets);
-		}
-		
-//		// X icon in lower right cornet
-//		var divDeleteCard = document.createElement("div");
-//		divDeleteCard.setAttribute("class", "exercise-card-remove");
-//		divDeleteCard.innerHTML = '<i class="fa fa-times"></i>';
-		
-		// Append elements to card
-		divExerciseCard.appendChild(divCardTitle);
-		divExerciseCard.appendChild(hr);
-		divExerciseCard.appendChild(divCardSets);
-//		divExerciseCard.appendChild(divDeleteCard);
-		
-		// Add event listener
-		divExerciseCard.addEventListener("click", function() {
-			var card = this;
-			card.style.transform = "scale(0.8)";
-			card.style.opacity = "0.8";
-			setTimeout(function () {
-				card.style.transform = "scale(1)";
-				card.style.opacity = "";
-				tau.changePage("sessionPage");
-			}, 120);
-		})
-		
-		// Append to section DOM
-		section.dom.appendChild(divExerciseCard);
+			
+	//		// X icon in lower right cornet
+	//		var divDeleteCard = document.createElement("div");
+	//		divDeleteCard.setAttribute("class", "exercise-card-remove");
+	//		divDeleteCard.innerHTML = '<i class="fa fa-times"></i>';
+			
+			// Append elements to card
+			divExerciseCard.appendChild(divCardTitle);
+			divExerciseCard.appendChild(hr);
+			divExerciseCard.appendChild(divCardSets);
+	//		divExerciseCard.appendChild(divDeleteCard);
+			
+			// Add event listener
+			divExerciseCard.addEventListener("click", function() {
+				selectedSession = section.workout.sessions[i];
+				var card = this;
+				card.style.transform = "scale(0.8)";
+				card.style.opacity = "0.8";
+				setTimeout(function () {
+					card.style.transform = "scale(1)";
+					card.style.opacity = "";
+					tau.changePage("sessionPage");
+				}, 120);
+			})
+			
+			// Append to section DOM
+			section.dom.appendChild(divExerciseCard);
+			
+		})(i);
 	}
 }
 

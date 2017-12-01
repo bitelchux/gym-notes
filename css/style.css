@@ -223,11 +223,95 @@ hr.styled {
 	left: 12px;
 }
 
-.padding-30 {
-	padding-top: 25px !important;
+.padding-10 {
+	padding-top: 10px !important;
 }
 
 
+.padding-25 {
+	padding-top: 25px !important;
+}
+
+input[type="number"] {
+  width: 100px;
+  font-family: sans-serif;
+  font-size: 26px;
+  appearance: none;
+  box-shadow: none;
+  border-radius: 15px;
+  padding: 5px !important;
+  border: solid 2px #FFD05B !important;
+  transition: box-shadow 0.3s, border 0.3s !important;
+  background-color: #1A1A1A;
+  box-shadow: 0 0 15px black;
+  color: #cccccc;
+  text-align: right; 
+  margin-left: 5px;
+  margin-right: 5px;
+}
+input[type="number"]:focus,
+input[type="number"].focus {
+  border: solid 2px #ff7f4f !important;
+}
+
+.text-bold {
+	font-weight: bold;
+}
+
+.btn-inc {
+	border: 2px solid;
+	border-color: #FFD05B;
+    border-radius: 25px;
+    text-align: center;
+    display: inline-block !important;
+    background-color: #1A1A1A;
+    color: #FFD05B;
+    position: relative;
+    width: 45px;
+    height: 45px;
+    box-shadow: 0px 0px 15px #FFD05B;
+    padding-top: 5px;
+    font-size: 28px;	
+}
+
+.weight-title {
+	font-size: 60%;	
+	margin-top: 3px;
+	margin-bottom: 3px;
+}
+
+.btn-add-rep {
+	border: 2px solid;
+	border-color: #ff7f4f;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #1A1A1A;
+    display: inline-block !important;
+    color: #ff7f4f;
+    position: relative;
+    padding: 5px;
+    font-size: 80%;
+    box-shadow: 0px 0px 10px black;
+    margin-right: 5px;
+}
+
+.btn-clear-rep {
+	border: 2px solid;
+	border-color: #ff7f4f;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #1A1A1A;
+    display: inline-block !important;
+    color: #ff7f4f;
+    position: relative;
+    padding: 5px;
+    font-size: 80%;
+    box-shadow: 0px 0px 10px black;
+}
+
+.margin-top-20 {
+	margin-top: 20px;
+}
 
 .ui-page .ui-footer.ui-bottom-button .ui-btn {
   background-color: rgba(242, 84, 47, 0.9);

@@ -13,10 +13,10 @@
 	
 	<!-- Main page -->
 	
-	<div class="ui-page ui-page-active" id="mainPage" data-enable-page-scroll="false">
+	<div class="ui-page" id="mainPage" data-enable-page-scroll="false">
 	
 	   <header class="ui-header header-low">
-	      <h2 class="ui-title text-red type-font padding-30" id="mainPageTitle">Today</h2>
+	      <h2 class="ui-title text-red type-font padding-25" id="mainPageTitle">Today</h2>
 		</header>
 		<div class="ui-content" id="sectionchanger">
 		   <div id="sections">
@@ -53,9 +53,7 @@
 		</header>
 		<div class="ui-content">
 			<ul class="ui-listview expand-list" id="exerciseListView">
-			<li>nekaj</li>
-			<li>nekaj2</li>
-			<li>nekaj3</li>
+				<li></li>
 		    </ul>
 		</div>
 	
@@ -63,12 +61,25 @@
 	
 	<!-- Session page -->
 	
-	<div class="ui-page" id="sessionPage">
+	<div class="ui-page" id="sessionPage"> 
 		
-		<header class="ui-header">
-	    	<h2 class="ui-title text-red type-font" id="sessionPageTitle">Edit</h2>
+		<header class="ui-header header-low">
+	    	<h2 class="ui-title text-red type-font padding-25" id="sessionPageTitle">Edit</h2>
 		</header>
-		<div class="ui-content">
+		<div class="ui-content padding-10">
+			<div>
+				<div id="labelKg" class="weight-title type-font">Weight (kg)</div>
+				<div id="btnSubKg" class="btn-inc type-font"><i class="fa fa-minus"></i></div> <input id="kgBox" type="number" value="0"/> <div id="btnAddKg" class="btn-inc"><i class="fa fa-plus"></i></div>
+			</div>
+			<div>
+				<div id="labelRep" class="weight-title type-font">Repetitions</div>
+				<div id="btnSubRep" class="btn-inc type-font"><i class="fa fa-minus"></i></div> <input id="repBox" type="number" value="0"/> <div id="btnAddRep" class="btn-inc"><i class="fa fa-plus"></i></div>
+			</div>
+			<div class="margin-top-20">
+				<div id="btnSave" class="btn-add-rep type-font"><i class="fa fa-download"></i> Add</div>
+				<div id="btnClear" class="btn-clear-rep type-font"><i class="fa fa-eraser"></i> Clear</div>
+			</div>
+			
 		</div>
 	
 	</div>
@@ -82,5 +93,6 @@
 	<script src="js/main_page.js" defer></script>
 	<script src="js/exercise_categories_page.js" defer></script>
 	<script src="js/exercise_list_page.js" defer></script>
+	<script src="js/session_page.js" defer></script>
 </body>
 </html>
