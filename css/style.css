@@ -170,6 +170,7 @@ hr.styled {
 .exercise-card-title {
 	font-size: 80% !important;
 	padding: 5px 5px 5px 5px;
+	padding-right: 10px;
 }
 
 .exercise-card-reps {
@@ -313,6 +314,31 @@ input[type="number"].focus {
 	margin-top: 20px;
 }
 
+.session-card {
+	border-radius: 10px;
+    text-align: center;
+	width: 290px;
+	display:inline-block;
+	background-color: #1A1A1A;
+	box-shadow: 0 0 15px black;
+	position: relative;
+	-webkit-touch-callout: none;
+ 	-webkit-user-select: none;
+ 	user-select: none;		
+  	-webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+	font-size: 90% !important;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	padding-right: 5px;
+	padding-left: 5px;
+}
+
+.session-table {
+	text-align: center;
+	margin: 0 auto; 
+    width: 100%;	
+}
+
 .ui-page .ui-footer.ui-bottom-button .ui-btn {
   background-color: rgba(242, 84, 47, 0.9);
 
@@ -333,6 +359,13 @@ input[type="number"].focus {
   background-color: rgba(255, 151, 112, 0.6);
 }
 
+.ui-popup .ui-popup-footer.ui-side-button .ui-btn:nth-child(n) {
+	background-color: rgba(242, 84, 47, 0.9);
+}
+
+.ui-popup .ui-popup-footer.ui-side-button .ui-btn:nth-child(n)::after {
+	background-color: rgba(255, 151, 112, 0.6);
+}
 
 .swiper-pagination-bullet-active-prev {
 	-webkit-transform: scale(0.66);
@@ -1028,11 +1061,11 @@ li.static::before {
 }
 .btn-icon-check::before {
 	background-color: rgba(245, 245, 245, 1);
-	-webkit-mask-image: url(../contents/popup/images/tw_ic_popup_btn_check.png);
+	-webkit-mask-image: url(../images/tw_ic_popup_btn_check.png);
  }
 .btn-icon-cancel::before {
 	background-color: rgba(245, 245, 245, 1);
-	-webkit-mask-image: url(../contents/popup/images/tw_ic_popup_btn_delete.png);
+	-webkit-mask-image: url(../images/tw_ic_popup_btn_delete.png);
  }
 .btn-icon-toast-check {
 	margin-bottom: 16px;

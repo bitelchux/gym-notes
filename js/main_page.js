@@ -12,6 +12,9 @@ var paginationEl = document.getElementById("pagination");
 var sideBtnEl = document.getElementById("sideBtn");
 var newCategorySearch = true;
 var selectedSession = null;
+var deletePopup = document.getElementById("deletePopup");
+var deletePopupMessage = document.getElementById("deletePopupMessage");
+var deletePopupOk = document.getElementById("deletePopupOk");
 
 /**
  * pagecreate event handler
@@ -143,6 +146,47 @@ function sectionChangeHandler(e) {
 		}, 200);
 	}
 }
+
+/**
+ * popupcreate event handler
+ * Sets up the popup message
+ */
+deletePopup.addEventListener("popupcreate", function() {
+	deletePopupMessage.innerHTML = "Are you sure you want to delete this exercise?"
+})
+
+/**
+ * popuphide event handler
+ * Updates section view in case it was updated by deleting a session
+ */
+deletePopup.addEventListener("popupbeforehide", function() {
+	// Update view in case section was updated by adding or removing exercises
+	var currentSectionIdx = sectionChangerWidget.getActiveSectionIndex();
+	if (loadedSections[currentSectionIdx].updated) {
+		fillSectionDOM(loadedSections[currentSectionIdx]);
+		loadedSections[currentSectionIdx].updated = false;
+	}
+    // Showing/hiding side button
+    if (loadedSections[currentSectionIdx].workout == null) {
+    	sideBtnEl.style.display = "none";
+    } else {
+    	sideBtnEl.style.display = "inline-block";
+    }
+})
+
+/**
+ * click event handler for popup ok button
+ * Removes session from the section
+ */
+deletePopupOk.addEventListener("click", function() {
+	var currentSection = loadedSections[sectionChangerWidget.getActiveSectionIndex()];
+	var currentSessionIdx = currentSection.workout.sessions.indexOf(selectedSession);
+	currentSection.workout.sessions.splice(currentSessionIdx, 1);
+	if (currentSection.workout.sessions.length === 0) {
+		currentSection.workout = null;
+	}
+	currentSection.updated = true; 
+})
 
 /**
  * Adds new section
@@ -299,18 +343,18 @@ function generateFullSection(section) {
 				divCardSets.appendChild(tableSets);
 			}
 			
-	//		// X icon in lower right cornet
-	//		var divDeleteCard = document.createElement("div");
-	//		divDeleteCard.setAttribute("class", "exercise-card-remove");
-	//		divDeleteCard.innerHTML = '<i class="fa fa-times"></i>';
+			// X icon in lower right cornet
+			var divDeleteCard = document.createElement("div");
+			divDeleteCard.setAttribute("class", "exercise-card-remove");
+			divDeleteCard.innerHTML = '<i class="fa fa-times"></i>';
 			
 			// Append elements to card
 			divExerciseCard.appendChild(divCardTitle);
 			divExerciseCard.appendChild(hr);
 			divExerciseCard.appendChild(divCardSets);
-	//		divExerciseCard.appendChild(divDeleteCard);
+			divExerciseCard.appendChild(divDeleteCard);
 			
-			// Add event listener
+			// Add click event listener for the card
 			divExerciseCard.addEventListener("click", function() {
 				selectedSession = section.workout.sessions[i];
 				var card = this;
@@ -322,6 +366,13 @@ function generateFullSection(section) {
 					tau.changePage("sessionPage");
 				}, 120);
 			})
+			
+			// Add click event listener for the remove button
+			divDeleteCard.addEventListener("click", function(e) {
+				e.stopPropagation();
+				selectedSession = section.workout.sessions[i];
+				tau.openPopup(deletePopup);
+			});
 			
 			// Append to section DOM
 			section.dom.appendChild(divExerciseCard);

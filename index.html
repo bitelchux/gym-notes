@@ -30,6 +30,18 @@
 
 	</div>
 	
+	<!-- Main page - delete popup -->
+	
+	<div id="deletePopup" class="ui-popup">
+		<div id="deletePopupMessage" class="ui-popup-content">
+			
+		</div>
+		<div class="ui-popup-footer ui-side-button ui-grid-col-2">
+			<a id="deletePopupCancel" href="#" class="ui-btn btn-icon-cancel" data-rel="back">c</a>
+			<a id="deletePopupOk" href="#" class="ui-btn btn-icon-check" data-rel="back">o</a>
+		</div>
+	</div>
+	
 	<!-- Exercise categories page -->
 	
 	<div class="ui-page" id="exerciseCategoriesPage">
@@ -66,7 +78,7 @@
 		<header class="ui-header header-low">
 	    	<h2 class="ui-title text-red type-font padding-25" id="sessionPageTitle">Edit</h2>
 		</header>
-		<div class="ui-content padding-10">
+		<div class="ui-content padding-10"> 
 			<div>
 				<div id="labelKg" class="weight-title type-font">Weight (kg)</div>
 				<div id="btnSubKg" class="btn-inc type-font"><i class="fa fa-minus"></i></div> <input id="kgBox" type="number" value="0"/> <div id="btnAddKg" class="btn-inc"><i class="fa fa-plus"></i></div>
@@ -78,6 +90,12 @@
 			<div class="margin-top-20">
 				<div id="btnSave" class="btn-add-rep type-font"><i class="fa fa-download"></i> Add</div>
 				<div id="btnClear" class="btn-clear-rep type-font"><i class="fa fa-eraser"></i> Clear</div>
+			</div>
+			
+			<div id="sessionCard" class="session-card margin-top-20" style="display: none">
+				<table id="setTable" class="session-table hand-font">
+					
+				</table>
 			</div>
 			
 		</div>
