@@ -18,8 +18,12 @@ function DBManager() {
 }
 
 DBManager.prototype.getAllWorkouts = function() {
-    var workouts = { };
-    
+    var workouts = window.localStorage.getItem("workouts");
+    if (typeof workouts === 'undefined' || workouts === null) {
+    	workouts = {};
+    } else {
+    	workouts = JSON.parse(workouts);
+    }
     return workouts;
 };
 
@@ -36,6 +40,22 @@ DBManager.prototype.getAllExercises = function(callback) {
 	$.getJSON("fixtures/exercises.json", function(data) {
 		callback(data);
 	})
+};
+
+DBManager.prototype.saveWorkouts = function(sections, callback) {
+	var workouts = window.localStorage.getItem("workouts");
+	if (typeof workouts === 'undefined' || workouts === null) {
+		workouts = {};
+	} else {
+		workouts = JSON.parse(workouts);
+	}
+	for (var i = 0; i < sections.length; i++) {
+		if (sections[i].workout != null) {
+			workouts[sections[i].date.yyyymmdd()] = sections[i].workout;
+		}
+	}
+	window.localStorage.setItem("workouts",JSON.stringify(workouts));
+	callback();
 };
 
 var dbManager = new DBManager();

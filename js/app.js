@@ -1,5 +1,6 @@
 /**
  * Tizen back key event handler
+ * Saves data to local storage
  */
 window.addEventListener( 'tizenhwkey', function( ev ) {
 	if( ev.keyName === "back" ) {
@@ -7,7 +8,9 @@ window.addEventListener( 'tizenhwkey', function( ev ) {
 			pageid = page ? page.id : "";
 		if( pageid === "mainPage" ) {
 			try {
-				tizen.application.getCurrentApplication().exit();
+				dbManager.saveWorkouts(loadedSections, function() {
+					tizen.application.getCurrentApplication().exit();
+				})
 			} catch (ignore) {
 			}
 		} else {
@@ -15,3 +18,15 @@ window.addEventListener( 'tizenhwkey', function( ev ) {
 		}
 	}
 } );
+
+/**
+ * visibilitychange event handler
+ * Saves data to local storage
+ */
+document.addEventListener("visibilitychange", function () {
+	if (document["hidden"]){
+		dbManager.saveWorkouts(loadedSections, function() {
+			// Do nothing
+		})		  
+	} 
+});
